@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator 
 from jdatetime import date,datetime
 
 class Buy(models.Model):
@@ -7,9 +8,10 @@ class Buy(models.Model):
     name=models.CharField(max_length=255)
     description=models.CharField(max_length=255)
     price=models.BigIntegerField()
-    year=models.IntegerField(default=date.today().year)
+    number=models.BigIntegerField()
+    year=models.PositiveIntegerField(default=date.today().year)
     month=models.CharField(max_length=40,default=date.today().strftime("%B"))
-    day=models.IntegerField(default=date.today().day)
+    day=models.PositiveIntegerField(default=date.today().day,validators=[MaxValueValidator(31)])
 
 class Sell(models.Model):
     def __str__(self):
@@ -17,6 +19,7 @@ class Sell(models.Model):
     name=models.CharField(max_length=255)
     description=models.CharField(max_length=255)
     price=models.BigIntegerField()
-    year=models.IntegerField(default=date.today().year)
+    number=models.BigIntegerField()
+    year=models.PositiveIntegerField(default=date.today().year)
     month=models.CharField(max_length=40,default=date.today().strftime("%B"))
-    day=models.IntegerField(default=date.today().day)
+    day=models.PositiveIntegerField(default=date.today().day,validators=[MaxValueValidator(31)])
