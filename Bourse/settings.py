@@ -124,3 +124,5 @@ STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), '/static/', )
 
 RECAPTCHA_SITE_KEY = '6LfJ4bkZAAAAAMdv9jHtB_pwVM4RdWMbZlMTLVIe'
 RECAPTCHA_SECRET_KEY = '6LfJ4bkZAAAAAEjoHat1tGBDqtkDNl7AUZgQTxa6'
+
+LOGIN_URL= 'http://localhost:8009/login/?required=True'

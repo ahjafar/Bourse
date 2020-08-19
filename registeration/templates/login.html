@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}
+ورود
+{% endblock %}
+
+{% block content %}
+
+
+
+<div class="row row-form">
+    <div class="container col-md-6 col-md-offset-3 mt-3 ">
+        {% if message %}
+            <div class="alert alert-info alert-dismissible fade show">
+                <h5>{{ message|safe }}</h5>
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+{% endif %}
+        <div class="card bg-light">
+            <div class="card-header">
+                ورود
+            </div>
+            <div class="card-body">
+                <form method="post" class="needs-validation">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_username"> نام کاربری:</label> {{ form.username }}
+                    </div>
+                    <div class="form-group">
+                        <label for="id_password">رمز عبور:</label> {{ form.password }}
+                    </div>
+                    <div class="g-recaptcha" data-sitekey="{{site_key}}"></div>
+                    <div class="alert alert-danger alert-dismissible fade show d-{{ cdisplay|default:'none' }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        لطفا کپچا رو به درستی وارد کنید
+                    </div>
+                    <button type="submit" class="btn btn-primary">ورود</button>
+                </form>
+                <a href="http://localhost:8009/resetpassword">رمز عبورتان را فراموش کرده اید؟</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script src='https://www.google.com/recaptcha/api.js?hl=fa' async defer></script>
+{% endblock %}

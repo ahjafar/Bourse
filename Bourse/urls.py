@@ -17,7 +17,12 @@ from django.contrib import admin
 from django.urls import path,re_path,include
 from registeration import views as v
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('admin/', admin.site.urls,name='admin'),
     path('register/', v.register , name='register'),
-    re_path(r'^web/',include("web.urls"))
+    path('resetpassword/', v.reset_pasword , name='reset_password'),
+    path('login/', v.Login , name='login'),
+    # path('test/', v.login_check , name='test'),
+    path('logout/', v.Logout , name='logout'),
+    path('', v.index , name='index'),
+    re_path(r'^web/',include("web.urls"),name='Web')
 ]

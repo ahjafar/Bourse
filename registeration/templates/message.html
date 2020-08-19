@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ title }}
+{% endblock %}
+{% block content %}
+<div class="container card bg bg-light mt-3 " >
+    <div class="bg-light card-body text-center  border-black m-5 p-5 text-black">
+        {{ message|safe }}
+    </div>
+</div>
+{% endblock %}

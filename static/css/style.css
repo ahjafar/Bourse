@@ -42,6 +42,10 @@ label,button{
 .alert{
     text-align: right ;
 }
-.row-ec{
+.row-form{
     margin-bottom: 80px;
+}
+.c{
+    position: relative;
+    left: 10px;
 }

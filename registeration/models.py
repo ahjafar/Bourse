@@ -17,3 +17,12 @@ class Temp_user(models.Model):
     password=models.CharField(max_length=255)
     code=models.CharField(max_length=48)
     request_date=models.DateField()
+
+class Password_reset(models.Model):
+    def __str__(self):
+        return str(self.request_date)
+    email=models.EmailField()
+    code=models.CharField(max_length=48)
+    request_date=models.DateField()
+    Is_ok=models.BooleanField(default=False)
+    
