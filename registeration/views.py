@@ -182,16 +182,16 @@ def Login(request):
             return render(request, 'login.html', {'form': form,'cdisplay':'block','site_key':settings.RECAPTCHA_SITE_KEY})
     elif 'required' in request.GET:
         form=LoginForm()
-        return render(request, 'login.html', {'form': form,'cdisplay':'block','site_key':settings.RECAPTCHA_SITE_KEY,'message':'برای دسترسی به این صفحه ابتدا باید وارد شوید.'})
+        return render(request, 'login.html', {'form': form,'site_key':settings.RECAPTCHA_SITE_KEY,'message':'برای دسترسی به این صفحه ابتدا باید وارد شوید.'})
     else:
         context={}
         context['form']=LoginForm()
         context['site_key']=settings.RECAPTCHA_SITE_KEY
         return render(request,'login.html',context)
 
-@login_required
-def login_check(request):
-    return render(request,'message.html', {'message':'Hi There'})
+# @login_required
+# def login_check(request):
+#     return render(request,'message.html', {'message':'Hi There'})
 
 def Logout(request):
     logout(request)

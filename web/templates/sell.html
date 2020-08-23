@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-خرید جدید
+فروش جدید
 {% endblock %}
 {% block head %}
   <style>
@@ -18,7 +18,7 @@
     <div class="container col-md-6 col-md-offset-3 mt-3 ">
         <div class="card bg-light">
             <div class="card-header">
-              خرید
+              فروش
             </div>
             <div class="card-body">
                 <form method="post" class="needs-validation">
@@ -28,13 +28,17 @@
                     </div>
                     <div class="alert alert-danger alert-dismissible fade show d-{{ ndisplay|default:'none' }}">
                       <button type="button" class="close" data-dismiss="alert">&times;</button>
-                      نام نماد وارد شده درست نیست.لطفا صحت اطلاعات وارد شده را بررسی کنید.
+                        این نماد در دارایی های شما وجود ندارد.
                     </div>
                     <div class="form-group">
                         <label for="id_price">قیمت هر سهم:</label> {{ form.price }}
                     </div>
                     <div class="form-group">
                       <label for="id_quantity">تعداد:</label> {{ form.quantity }}
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show d-{{ qdisplay|default:'none' }}">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        تعداد دارایی شما از تعداد وارد شده کمتر است.
                     </div>
                     <div class=" form-row">
                       <div class="form-group col-4">

@@ -3,7 +3,6 @@ from django import forms
 
 class NewUserForm(forms.Form):
     username=forms.CharField(max_length=255,
-                            label='Your username:',
                             widget=forms.TextInput(attrs={'class':'form-control','placeholder':'Username'}))
     email=forms.EmailField(widget=forms.EmailInput(attrs={'class':'form-control'}))
     password=forms.CharField(max_length=255,
