@@ -172,15 +172,18 @@ def Login(request):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                context={'message':username+'   '+ password+'   '+ str(user)}
-                return render(request,'message.html',context)
+                #context={'message':username+'   '+ password+'   '+ str(user)}
+                #return render(request,'message.html',context)
+                if 'next' in request.GET:
+                    return redirect('http://localhost:8009{}'.format(request.GET['next']))
+                return render(request,'index.html')
             else:
                 form=LoginForm()
-                return render(request, 'login.html', {'form': form,'cdisplay':'block','site_key':settings.RECAPTCHA_SITE_KEY,'message' :'نام کاربری یا رمز عبور نادرست است'})
+                return render(request, 'login.html', {'form': form,'site_key':settings.RECAPTCHA_SITE_KEY,'message' :'نام کاربری یا رمز عبور نادرست است'})
         else:
             form=LoginForm()
             return render(request, 'login.html', {'form': form,'cdisplay':'block','site_key':settings.RECAPTCHA_SITE_KEY})
-    elif 'required' in request.GET:
+    elif 'next' in request.GET:
         form=LoginForm()
         return render(request, 'login.html', {'form': form,'site_key':settings.RECAPTCHA_SITE_KEY,'message':'برای دسترسی به این صفحه ابتدا باید وارد شوید.'})
     else:

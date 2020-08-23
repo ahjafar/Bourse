@@ -1,0 +1,5 @@
+build a 404 page
+beautify email verification message
+add username field to reset password page
+change reset password page for authenticated users
+add a password confirmation to reset password templates
