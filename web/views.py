@@ -166,7 +166,7 @@ def deposit_table(request,n):
     return render(request,'deposit-stats.html',context)
 
 @login_required
-def deposit_table(request,n):
+def withdraw_table(request,n):
     context={}
     month=[]
     w=Withdraw.objects.filter(user=request.user)

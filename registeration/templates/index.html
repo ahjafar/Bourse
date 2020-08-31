@@ -7,6 +7,14 @@ Bourse
 <div class="container card bg bg-primary mt-3 " >
     <div class="bg-primary card-body text-center  border-black m-5 p-5 text-black">
         <h2>This is my INDEX</h2>
-    </div>
+        {% if user.is_authenticated %}
+            <hr>
+        {% endif %}
+        {% if balance %}
+            <p>        مقدار وجه واریز شده تا کنون:
+            </p>
+            <p>{{ balance }}</p>
+        {% endif %}
+</div>
 </div>
 {% endblock %}

@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path,include
 from registeration import views as v
-from web.views import add_buy,add_sell,property_table,add_deposit,deposit_table,add_withdraw
+from web.views import add_buy,add_sell,property_table,add_deposit,deposit_table,add_withdraw,withdraw_table
 urlpatterns = [
     path('admin/', admin.site.urls,name='admin'),
     path('register/', v.register , name='register'),
@@ -30,6 +30,7 @@ urlpatterns = [
     path('add_deposit/', add_deposit , name='add deposit'),
     path('add_withdraw/', add_withdraw , name='add withdraw'),
     re_path(r'^stats/properties/(\d*)$', property_table , name='property table'),
-    re_path(r'^stats/deposits/(\d*)$', deposit_table , name='deposite table'),    
+    re_path(r'^stats/deposits/(\d*)$', deposit_table , name='deposite table'),
+    re_path(r'^stats/withdraw/(\d*)$', withdraw_table , name='withdraw table'),    
     re_path(r'^web/',include("web.urls"),name='Web')
 ]

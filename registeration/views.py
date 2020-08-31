@@ -10,6 +10,7 @@ from .models import Temp_user,Password_reset
 from datetime import datetime
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.decorators import login_required
+from web.models import Balance
 
 def get_client_ip(request):
     x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
@@ -176,7 +177,7 @@ def Login(request):
                 #return render(request,'message.html',context)
                 if 'next' in request.GET:
                     return redirect('http://localhost:8009{}'.format(request.GET['next']))
-                return render(request,'index.html')
+                return redirect('http://localhost:8009')
             else:
                 form=LoginForm()
                 return render(request, 'login.html', {'form': form,'site_key':settings.RECAPTCHA_SITE_KEY,'message' :'نام کاربری یا رمز عبور نادرست است'})
@@ -201,4 +202,8 @@ def Logout(request):
     return redirect('http://localhost:8009/')
 
 def index(request):
-    return render(request,'index.html')
+    context={}
+    #print(request.user.is_authenticated())
+    if request.user.is_authenticated:
+        context['balance']='{:,}'.format(Balance.objects.get(user=request.user).amount)+'ريال'
+    return render(request,'index.html',context)
