@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-تاریخچه واریز وجه
+تاریخچه برداشت وجه
 {% endblock %}
 {% block content %}
 <div class="table-responsive">
@@ -13,11 +13,11 @@
             </tr>
         </thead>
         <tbody>
-            {% for deposit,month in x %}
+            {% for withdraw,month in x %}
                 <tr>
-                    <td>{{ deposit.amount }}</td>
+                    <td>{{ withdraw.amount }}</td>
                     
-                    <td>{{ deposit.year }}/{{ month }}/{{ deposit.day }}</td>
+                    <td>{{ withdraw.year }}/{{ month }}/{{ withdraw.day }}</td>
                 </tr>
             {% endfor %}
         </tbody>

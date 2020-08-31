@@ -1,9 +1,10 @@
 from django.shortcuts import render
-from .forms import AddBuyForm,AddSellForm,AddDepositForm
+from .forms import AddBuyForm,AddSellForm,AddDepositForm,AddWithdrawForm
 from django.contrib.auth.decorators import login_required
-from .models import Buy,Property,Stock,Sell,Deposit
+from .models import Buy,Property,Stock,Sell,Deposit,Withdraw,Balance
 from .utils import check_stock,check_property,get_price
 from math import ceil
+import jdatetime
 # from django.views.decorators.csrf import csrf_exempt
 
 @login_required
@@ -81,17 +82,22 @@ def add_sell(request):
     
 @login_required
 def property_table(request,n):
-    prices,gains=[],[]
+    prices,gains,values,gain_amounts=[],[],[],[]
     context={}
     p=Property.objects.filter(user=request.user)
     if n=='':n=1
     n=int(n)
-    for i in p[10*(n-1):10*n]:
+    for i in p:
         price=get_price(i.stock.url)
         prices.append(price)
+        values.append(price*i.quantity)
         gains.append("{:.2f}".format((price-i.price)/i.price*100))
+        gain_amounts.append((price-i.price)*i.quantity)
+    context['property']=sum(values)
+    context['number']=len(p)
+    context['gain']=sum(gain_amounts)
     context['range']=range(1,ceil(p.count()/10)+1)
-    context['x']=zip(p[10*(n-1):10*n],range(10*(n-1)+1,10*n+1),prices,gains)
+    context['x']=zip(p[10*(n-1):10*n],range(10*(n-1)+1,10*n+1),prices[10*(n-1):10*n],gains[10*(n-1):10*n],values[10*(n-1):10*n],gain_amounts[10*(n-1):10*n])
     context['activation']={n:'activated'}
     return render(request,'property.html',context)
 
@@ -105,6 +111,12 @@ def add_deposit(request):
         day=request.POST['day']
         user=request.user
         Deposit.objects.create(user=user,amount=amount,year=year,month=month,day=day)
+        if Balance.objects.filter(user=user).exists():
+            b=Balance.objects.get(user=user)
+            b.amount+=amount
+            b.save()
+        else:
+            Balance.objects.create(user=user,amount=amount)
         context={}
         context['form']=AddDepositForm()
         context['message']='واریز وجه اضافه شد.'
@@ -113,14 +125,56 @@ def add_deposit(request):
         form=AddDepositForm()
         return render(request,'deposit.html',{'form':form})
 
+@login_required
+def add_withdraw(request):
+    if 'amount' in request.POST:
+        amount=int(request.POST['amount'])
+        year=request.POST['year']
+        month=request.POST['month']
+        day=request.POST['day']
+        user=request.user
+        Withdraw.objects.create(user=user,amount=amount,year=year,month=month,day=day)
+        context={}
+        context['form']=AddWithdrawForm()
+        if Balance.objects.filter(user=user).exists():
+            b=Balance.objects.get(user=user)
+            if b.amount>=amount:
+                b.amount-=amount
+                b.save()
+                context['message']='برداشت وجه اضافه شد.'
+            else:
+                context['adisplay']='block'
+        else:
+            context['adisplay']='block'
+        return render(request,'withdraw.html',context)
+    else:
+        form=AddWithdrawForm()
+        return render(request,'withdraw.html',{'form':form})
 
 @login_required
 def deposit_table(request,n):
     context={}
-    p=Deposit.objects.filter(user=request.user)
+    month=[]
+    d=Deposit.objects.filter(user=request.user)
     if n=='':n=1
     n=int(n)
-    context['property']=p[10*(n-1):10*n]
-    context['range']=range(1,ceil(p.count()/10)+1)
+    context['range']=range(1,ceil(d.count()/10)+1)
     context['activation']={n:'activated'}
+    for i in d[10*(n-1):10*n]:
+        month.append(jdatetime.date.j_months_short_en.index(i.month)+1)
+    context['x']=zip(d[10*(n-1):10*n],month)
+    return render(request,'deposit-stats.html',context)
+
+@login_required
+def deposit_table(request,n):
+    context={}
+    month=[]
+    w=Withdraw.objects.filter(user=request.user)
+    if n=='':n=1
+    n=int(n)
+    context['range']=range(1,ceil(w.count()/10)+1)
+    context['activation']={n:'activated'}
+    for i in w[10*(n-1):10*n]:
+        month.append(jdatetime.date.j_months_short_en.index(i.month)+1)
+    context['x']=zip(w[10*(n-1):10*n],month)
     return render(request,'deposit-stats.html',context)

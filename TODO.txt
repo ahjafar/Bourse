@@ -3,3 +3,6 @@ beautify email verification message
 add username field to reset password page
 change reset password page for authenticated users
 add a password confirmation to reset password templates
+add a search box in stat pages
+increase speed with celery
+increase stat pages speed with saving the data

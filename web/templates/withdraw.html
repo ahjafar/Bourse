@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}
+برداشت وجه
+{% endblock %}
+{% block head %}
+  <style>
+    input{
+      direction: rtl;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+
+
+<div class="row row-form">
+    <div class="container col-md-6 col-md-offset-3 mt-3 ">
+      {% if message %}
+        <div class="alert alert-info alert-dismissible fade show">
+            <h5>{{ message|safe }}</h5>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      {% endif %}
+        <div class="card bg-light">
+            <div class="card-header">
+              برداشت وجه
+            </div>
+            <div class="card-body">
+                <form method="post" class="needs-validation">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_amount">مبلغ :</label> {{ form.amount }}
+                    </div>
+                    <div class="alert alert-danger alert-dismissible fade show d-{{ adisplay|default:'none' }}">
+                      <button type="button" class="close" data-dismiss="alert">&times;</button>
+                       دارایی شما از مقدار وارد شده کمتر است.
+                    </div>
+                    <div class=" form-row">
+                      <div class="form-group col-4">
+                        <label for="id_day" class="m-1">روز:</label> {{ form.day }}
+                      </div>
+                      <div class="form-group col-4">
+                        <label for="id_month" class="m-1">ماه:</label> {{ form.month }}
+                      </div>
+                      <div class="form-group col-4">
+                        <label for="id_year" class="m-1">سال:</label> {{ form.year }}
+                      </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">ثبت</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

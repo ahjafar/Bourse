@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load humanize %}
+
+
 {% block title %}
 پورتفوی
 {% endblock %}
@@ -13,27 +16,45 @@
                 <th>دارایی</th>
                 <th>میانگین خرید</th>
                 <th>قیمت کنونی</th>
-                <th>سود/ضرر</th>
+                <th>ارزش کنونی</th>
+                <th> درصد سود/ضرر </th>
+                <th> مقدار سود/ضرر </th>
             </tr>
         </thead>
         <tbody>
-            {% for i,j,k,l in x %}
+            {% for i,j,k,l,m,n in x %}
                 <tr>
                     <td>{{ j }}</td>
                     <td>{{ i.stock.name }}</td>
                     <td>{{ i.stock.description }}</td>
                     <td>{{ i.quantity }}</td>
-                    <td>{{ i.price }}</td>
-                    <td>{{ k }}</td>
-                    <td>{{ l }}</td>
+                    <td>{{ i.price|intcomma }}</td>
+                    <td>{{ k|intcomma }}</td>
+                    <td>{{ m|intcomma }}</td>
+                    {% if n > 0  %}
+                        <td style="direction: ltr;color:green;">{{ l }}</td>
+                        <td style="direction: ltr;color:green;">{{ n|intcomma }}</td>
+                    {% else %}
+                        <td style="direction: ltr;color:red;">{{ l }}</td>
+                        <td style="direction: ltr;color:red;">{{ n|intcomma }}</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
-            <tr>
-                <td>{{ j }}</td>
-                <td>{{ i.stock.name }}</td>
-                <td>{{ i.stock.description }}</td>
-                <td>{{ i.price }}</td>
-                <td>{{ i.quantity }}</td>
+        </tbody>
+    </table>
+    <table class="table table-bordered container mt-3">    
+         <tbody>   
+            <tr class="table-info">
+                <td>تعداد نماد:</td>
+                <td>{{ number }}</td>
+                <td>دارایی</td>
+                <td>{{ property|intcomma }}</td>
+                <td>سود/ضرر</td>
+                {% if gain > 0  %}
+                    <td style="direction: ltr;color:green;">{{ gain|intcomma }}</td>
+                {% else %}
+                    <td style="direction: ltr;color:red;">{{ gain|intcomma }}</td>
+                {% endif %}
             </tr>
         </tbody>
     </table>
@@ -48,3 +69,9 @@
     {% endfor %}
 </ul>
 {% endblock %}
+
+{% comment %}
+    TODO:build a search form
+    TODO:green and red
+{% endcomment %}
+    

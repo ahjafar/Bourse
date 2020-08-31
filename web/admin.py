@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Buy,Sell,Property,Stock,StockError,Deposit
+from .models import Buy,Sell,Property,Stock,StockError,Deposit,Withdraw,Balance
 # from . import models
 
 @admin.register(Buy)
@@ -49,9 +49,19 @@ class DepositAdmin(admin.ModelAdmin):
         if i.name!= 'id':list_display.append(i.name)
     list_display=tuple(list_display)
 
+@admin.register(Withdraw)
+class WithdrawAdmin(admin.ModelAdmin):
+    list_display=[]
+    for i in Withdraw._meta.fields:
+        if i.name!= 'id':list_display.append(i.name)
+    list_display=tuple(list_display)
 
-
-
+@admin.register(Balance)
+class BalanceAdmin(admin.ModelAdmin):
+    list_display=[]
+    for i in Balance._meta.fields:
+        if i.name!= 'id':list_display.append(i.name)
+    list_display=tuple(list_display)
 # admin.site.register(Buy)
 # admin.site.register(Sell)
 # admin.site.register(Property)
