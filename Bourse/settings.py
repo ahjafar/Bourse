@@ -125,7 +125,7 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATICFILES_DIRS = ( os.path.join(BASE_DIR, 'static'), '/static/', )
 
-RECAPTCHA_SITE_KEY = '6LfJ4bkZAAAAAMdv9jHtB_pwVM4RdWMbZlMTLVIe'
-RECAPTCHA_SECRET_KEY = '6LfJ4bkZAAAAAEjoHat1tGBDqtkDNl7AUZgQTxa6'
+RECAPTCHA_SITE_KEY = 'your site key'
+RECAPTCHA_SECRET_KEY = 'your secret key'
 
 LOGIN_URL= 'http://localhost:8009/login/'
