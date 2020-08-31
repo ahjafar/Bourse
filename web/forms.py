@@ -45,3 +45,19 @@ class AddSellForm(forms.Form):
                             max_value=31,
                             min_value=1,
                             widget=forms.NumberInput(attrs={'class':'form-control'}))
+
+
+class AddDepositForm(forms.Form):
+    amount=forms.IntegerField(widget=forms.NumberInput(attrs={'class':'form-control'}),
+                            min_value=1)
+    year=forms.IntegerField(initial=date.today().year,
+                            max_value=date.today().year,
+                            min_value=1381,
+                            widget=forms.NumberInput(attrs={'class':'form-control'}))
+    month=forms.ChoiceField(choices=MONTH_CHOICES,
+                            initial=date.today().strftime("%b"),
+                            widget=forms.Select(attrs={'class':'form-control'}))
+    day=forms.IntegerField(initial=date.today().day,
+                            max_value=31,
+                            min_value=1,
+                            widget=forms.NumberInput(attrs={'class':'form-control'}))

@@ -16,16 +16,19 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,re_path,include
 from registeration import views as v
-from web.views import add_buy,add_sell
+from web.views import add_buy,add_sell,property_table,add_deposit,deposit_table
 urlpatterns = [
     path('admin/', admin.site.urls,name='admin'),
     path('register/', v.register , name='register'),
     path('resetpassword/', v.reset_pasword , name='reset password'),
     path('login/', v.Login , name='login'),
-    # path('test/', v.login_check , name='test'),
+    #re_path(r'test/(\d{3})', test , name='test'),
     path('logout/', v.Logout , name='logout'),
     path('', v.index , name='index'),
     path('add_buy/', add_buy , name='add buy'),
     path('add_sell/', add_sell , name='add sell'),
+    path('add_deposit/', add_deposit , name='add deposit'),
+    re_path(r'^stats/properties/(\d*)$', property_table , name='property table'),
+    re_path(r'^stats/deposits/(\d*)$', deposit_table , name='deposite table'),    
     re_path(r'^web/',include("web.urls"),name='Web')
 ]

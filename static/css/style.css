@@ -23,6 +23,7 @@ body{
     color: white;
     text-align: center;
     direction: rtl;
+    z-index: 20;
   }
 .card-header{
     text-align: center;
@@ -48,4 +49,13 @@ label,button{
 .c{
     position: relative;
     left: 10px;
+}
+td,th{
+    text-align: center;
+}
+.pagination{
+    margin-bottom: 70px;
+}
+.page-item.active .page-link{
+    z-index: -1 !important;
 }

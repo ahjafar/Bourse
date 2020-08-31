@@ -59,4 +59,12 @@ class Property(models.Model):
     price=models.BigIntegerField()
     quantity=models.BigIntegerField()
 
+class Deposit(models.Model):
+    def __str__(self):
+        return "{},{}".format(self.user,self.amount)
+    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    amount=models.BigIntegerField()
+    year=models.PositiveIntegerField(default=date.today().year)
+    month=models.CharField(max_length=3,choices=MONTH_CHOICES,default=date.today().strftime("%b"))
+    day=models.PositiveIntegerField(default=date.today().day,validators=[MaxValueValidator(31)])
 

@@ -9,7 +9,7 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <link rel="stylesheet" href="{% static '\css\style.css' %}">
+  <link rel="stylesheet" href="{% static '\\css\\style.css' %}">
 
   <title>
       {% block title %}
@@ -17,6 +17,11 @@
       {% endblock %}
   </title>
   {% block head %}
+  <style>
+    a{
+      text-align: center !important;
+    }
+  </style>
   {% endblock %}
 </head>
 <body>
@@ -29,11 +34,26 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
       <ul class="navbar-nav">
       {% if user.is_authenticated %}
-        <li class="nav-item">
-          <a class="nav-link" href="/add_buy/">Add buy</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            ثبت اطلاعات جدید
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="/add_buy/">خرید جدید</a>        
+            <a class="dropdown-item" href="/add_sell/">فروش جدید</a>
+            <a class="dropdown-item" href="/add_deposit/">واریز وجه جدید</a>
+          </div>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/add_sell/">Add sell</a>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+            مشاهده اطلاعات 
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="stats/properties">دارایی</a>
+            <a class="dropdown-item" href="stats/buys">خرید ها </a>
+            <a class="dropdown-item" href="stats/sells">فروش ها</a>
+            <a class="dropdown-item" href="stats/deposits">تاریخچه واریز وجه</a>
+          </div>
         </li>
         {% endif %}
       </ul>

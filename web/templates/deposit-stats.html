@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+تاریخچه واریز وجه
+{% endblock %}
+{% block content %}
+<div class="table-responsive">
+    <table class="table table-striped table-bordered table-dark container mt-3">
+        <thead class="thead-light">
+            <tr>
+                <th>مقدار</th>
+                <th>تاریخ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in property %}
+                <tr>
+                    <td>{{ i.stock.name }}</td>
+                    
+                    <td>{{ i.year }}/{{ i.month }}/{{ i.day }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<ul class="pagination justify-content-center">
+    {% for i in range %}
+        {% if i in activation %}
+            <li class="page-item  active"><a class="page-link" href="{{i}}">{{i}}</a></li>
+        {% else %}
+            <li class="page-item"><a class="page-link" href="{{i}}">{{i}}</a></li>
+        {% endif %}
+    {% endfor %}
+</ul>
+{% endblock %}

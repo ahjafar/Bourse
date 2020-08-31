@@ -1,6 +1,8 @@
 import re,requests,pickle
-from .models import Stock,StockError,Property
-
+#from .models import Stock,StockError,Property
+import pandas as pd
+from io import StringIO
+from datetime import date,timedelta
 
 def get_stock_ids():
     url = "http://tsetmc.com/tsev2/data/MarketWatchPlus.aspx"
@@ -52,3 +54,21 @@ def check_property(stock,quantity,user):
     else:
         return 1
 
+def get_price(code):
+    i=0
+    while True:
+        Date=date.today()-timedelta(days=i)
+        Date=Date.strftime('%Y%m%d')
+        url = "http://www.tsetmc.com/tse/data/Export-txt.aspx?a=InsTrade&InsCode={}&DateFrom={}&DateTo={}&b=0".format(code,Date,Date)
+        page = requests.get(url)
+        csv=StringIO(page.text)
+        i+=1
+        if page.text!='':
+            df=pd.read_csv(csv)
+            if len(df)!=0:
+                price=int(df['<CLOSE>'][0])
+                break
+    return price
+
+            
+        
